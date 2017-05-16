@@ -29,49 +29,90 @@ function getRandomArray(n) {
 	return arr;
 }
 
-function fread(file) {
-	var rawFile = new XMLHttpRequest();
+// function fread(file) {
+// 	var rawFile = new XMLHttpRequest();
+// 	var len=0;
+// 	rawFile.open("GET", file, false);
+// 	rawFile.onreadystatechange = function () {
+// 	    if(rawFile.readyState === 4) {
+// 	        if(rawFile.status === 200 || rawFile.status == 0)  {
+// 	            var arr = rawFile.responseText.split( "\n" );
+// 	            len = arr.length;
+// 	        	for(index = 0; index < len; index++) {
+// 	        		var str = arr[index], words=[];
+
+// 	        		if ( ENG == 1 ) {
+// 	        			words = str.split(' ');
+// 	        			cnt = words.length;
+// 	        		}
+// 	        		else cnt = str.length;
+
+// 	        		var deg = 0;
+// 	        		if( CLOCKWISE == 0 ) deg = Number( ANGLE + SPACE*((cnt-1)/2) + SPACE);
+// 	        		else deg = Number( ANGLE - SPACE*((cnt-1)/2) - SPACE);
+
+// 	        		for (var i = 0; i < cnt; i++) {
+
+// 	        			if( CLOCKWISE == 0 ) deg -= SPACE;
+// 	        			else deg += SPACE;
+
+// 	        			var Content = '<h1 class="line'+index+'" id="c' +index+i+ '"' ;
+// 	        			Content += 'style="display: none; ';
+// 	        			Content += 'transform: rotate('+deg+'deg);' ;
+// 	        			Content += 'top: ' +transTop(deg, RADIUS)+ ';' ;
+// 	        			Content += 'left: ' +transLeft(deg, RADIUS)+ ';">' ;
+// 	        			if( ENG == 1 ) Content += words[i]+ '</h1>' ;
+// 	        			else Content += str.charAt(i)+ '</h1>' ;
+// 	        			document.write( Content );
+
+// 	        		}
+
+// 	            }
+// 	        }
+// 	    }
+// 	}
+// 	rawFile.send(null);
+// 	return len;
+// }
+
+function readDict(dict) {
+
 	var len=0;
-	rawFile.open("GET", file, false);
-	rawFile.onreadystatechange = function () {
-	    if(rawFile.readyState === 4) {
-	        if(rawFile.status === 200 || rawFile.status == 0)  {
-	            var arr = rawFile.responseText.split( "\n" );
-	            len = arr.length;
-	        	for(index = 0; index < len; index++) {
-	        		var str = arr[index], words=[];
 
-	        		if ( ENG == 1 ) {
-	        			words = str.split(' ');
-	        			cnt = words.length;
-	        		}
-	        		else cnt = str.length;
+    var arr = dict.split( "\n" );
+    len = arr.length;
+	for(index = 0; index < len; index++) {
+		var str = arr[index], words=[];
 
-	        		var deg = 0;
-	        		if( CLOCKWISE == 0 ) deg = Number( ANGLE + SPACE*((cnt-1)/2) + SPACE);
-	        		else deg = Number( ANGLE - SPACE*((cnt-1)/2) - SPACE);
+		if ( ENG == 1 ) {
+			words = str.split(' ');
+			cnt = words.length;
+		}
+		else cnt = str.length;
 
-	        		for (var i = 0; i < cnt; i++) {
+		var deg = 0;
+		if( CLOCKWISE == 0 ) deg = Number( ANGLE + SPACE*((cnt-1)/2) + SPACE);
+		else deg = Number( ANGLE - SPACE*((cnt-1)/2) - SPACE);
 
-	        			if( CLOCKWISE == 0 ) deg -= SPACE;
-	        			else deg += SPACE;
+		for (var i = 0; i < cnt; i++) {
 
-	        			var Content = '<h1 class="line'+index+'" id="c' +index+i+ '"' ;
-	        			Content += 'style="display: none; ';
-	        			Content += 'transform: rotate('+deg+'deg);' ;
-	        			Content += 'top: ' +transTop(deg, RADIUS)+ ';' ;
-	        			Content += 'left: ' +transLeft(deg, RADIUS)+ ';">' ;
-	        			if( ENG == 1 ) Content += words[i]+ '</h1>' ;
-	        			else Content += str.charAt(i)+ '</h1>' ;
-	        			document.write( Content );
+			if( CLOCKWISE == 0 ) deg -= SPACE;
+			else deg += SPACE;
 
-	        		}
+			var Content = '<h1 class="line'+index+'" id="c' +index+i+ '"' ;
+			Content += 'style="display: none; ';
+			Content += 'transform: rotate('+deg+'deg);' ;
+			Content += 'top: ' +transTop(deg, RADIUS)+ ';' ;
+			Content += 'left: ' +transLeft(deg, RADIUS)+ ';">' ;
+			if( ENG == 1 ) Content += words[i]+ '</h1>' ;
+			else Content += str.charAt(i)+ '</h1>' ;
+			document.write( Content );
 
-	            }
-	        }
-	    }
-	}
-	rawFile.send(null);
+		}
+
+    }
+
+
 	return len;
 }
 

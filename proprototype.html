@@ -14,7 +14,7 @@
 	<script> 
 
 		var settings = JSON.parse(window.localStorage.getItem('settings'));
-		// window.settings = settings;
+		window.settings = settings;
 		var SEC = settings.SEC;
 		var FONTSIZE = settings.FONTSIZE;
 		var ANGLE = settings.ANGLE;
@@ -22,9 +22,11 @@
 		var ENG = settings.ENG;
 		var CLOCKWISE = settings.CLOCKWISE;
 		var SPACE = settings.SPACE;
+		var DICT = settings.DICT;
 
 		setSize();
-		var len = fread(FILE); 
+		//var len = fread(FILE); 
+		var len = readDict(DICT);
 		var rdarr = getRandomArray(len);
 		var currTrial = 0;
 		$(document).keyup(function (e){
