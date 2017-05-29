@@ -16,7 +16,7 @@ $(document).keyup(function (e){
 	    }
     	else $('#l1').fadeIn(1000);
 
-    	timer = setTimeout( 'fadeWord()', 3000 );
+    	timer = setTimeout( 'fadeWord()', 4000 );
 
     }
 
@@ -33,6 +33,6 @@ function fadeWord() {
 	var w = ".word[name=w" + curr + "]"; 
 	$(w).fadeTo(1000, 0);
 	curr += 1;
-	timer = setTimeout( 'fadeWord()', 3000 );
+	timer = setTimeout( 'fadeWord()', 4000 );
 	return;
 }
