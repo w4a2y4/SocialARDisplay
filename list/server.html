@@ -1,11 +1,30 @@
 <html>
   <head>
+  	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <script>
-      var socket = io.connect();
+
+  	var socket = io.connect();
+
+  	$(document).keyup(function (e){
+
+		// press enter : the list fade IN 
+		// (only work when there's nothing on the screen)
+		if( e.which === 13 ) { 
+			socket.emit('start',e);
+		}
+
+		// press space : a word fade OUT
+		else if( e.which === 32 ) {
+			socket.emit('click',e);
+		}
+
+	});
+
     </script>
+
     <div>This is our socket.html file</div>
   </body>
 </html>
