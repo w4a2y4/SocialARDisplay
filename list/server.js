@@ -1,57 +1,42 @@
-var http = require("http");
-var url = require('url');
-var fs = require('fs');
-var io = require('socket.io');
+var express = require('express');
+var port = 9487;
+var path = require('path');
+var app= express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-var server = http.createServer(function(request, response) {
+var user_num=0;
 
-  console.log('Connection');
+app.use(express.static(path.join(__dirname, 'view')));
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+app.get('/server.html', function(req, res){
+  res.sendFile(__dirname + '/server.html');
+});
 
-  var path = url.parse(request.url).pathname;
+io.on('connection', function(socket){
 
-  switch (path) {
+    console.log('user '+ user_num + ' connected');
+    socket.emit('ID_res', user_num);
+    var user = user_num++;
 
-    case '/':
-      response.writeHead(200, {'Content-Type': 'text/html'});
-      response.write('Hello, World.');
-      response.end();
-      break;
+    socket.on('disconnect', function(){
+        console.log('user '+user+' disconnectedQQ');
+    });
 
-    case '/server.html':
-      fs.readFile(__dirname + path, function(error, data) {
-        if (error){
-          response.writeHead(404);
-          response.write("opps this doesn't exist - 404");
-        } else {
-          response.writeHead(200, {"Content-Type": "text/html"});
-          response.write(data, "utf8");
-        }
-        response.end();
-      });
-      break;
+    socket.on('start_s', function(e){
+        console.log('user '+user+' press start !');
+        io.emit('start_c', e);
+    });
 
-      case '/index.html':
-      fs.readFile(__dirname + path, function(error, data) {
-        if (error){
-          response.writeHead(404);
-          response.write("opps this doesn't exist - 404");
-        } else {
-          response.writeHead(200, {"Content-Type": "text/html"});
-          response.write(data, "utf8");
-        }
-        response.end();
-      });
-      break;
-
-    default:
-      response.writeHead(404);
-      response.write("opps this doesn't exist - 404");
-      response.end();
-      break;
-
-  }
+    socket.on('click_s', function(e){
+        console.log('user '+user+' click !');
+        io.emit('click_c', e);
+    });
 
 });
 
-server.listen(8001);
-io.listen(server); 
+http.listen(port, function(){
+  console.log('listening on *:'+port);
+});
