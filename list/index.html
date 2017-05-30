@@ -3,22 +3,99 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>SocialAR proprototype (list)</title>
-	<link type="text/css" rel="stylesheet" href="index.css">
+	<title>SocialAR proprototype</title>
+	<!--link type="text/css" rel="stylesheet" href="index.css"-->
 	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script language="JavaScript" src="./fade.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<!--script language="JavaScript" src="./fade.js"></script>
+	<script language="JavaScript" src="./client.js"></script-->
+
+	<script type="text/javascript">
+		var socket = io.connect();
+		var curr = 1;
+		var timer;
+		var userID;
+
+		socket.on('ID_res', function(n){
+			userID = n;
+			console.log('my ID is ' + n );
+			$('title').text('#' + userID + ' SocialAR proprototype');
+		});
+
+		// press enter : the list fade IN 
+		// (only work when there's nothing on the screen)
+		socket.on('start_c', function(dest, list) {
+			if( dest == userID ) {
+				// if( curr > 7 ) {
+			    	for (var i = 1; i <= 7; i++) {
+			    		var w = ".word[name=w" + i + "]"; 
+			    		$(w).text( list[i-1] );
+			    		$(w).fadeTo(1000, 1);
+			    	}
+			    	curr = 1;
+			    // }
+				$('#l1').fadeIn(1000);
+
+				timer = setTimeout( 'fadeWord()', 4000 );
+			}
+
+		});
+
+		// press space : a word fade OUT
+		socket.on('click_c', function(dest) {
+			//if( dest != userID ) break;
+			fadeWord();
+		});
+
+		function fadeWord() {
+			clearTimeout(timer);
+			if( curr > 7 ) return;
+			var w = ".word[name=w" + curr + "]"; 
+			$(w).fadeTo(1000, 0);
+			curr += 1;
+			timer = setTimeout( 'fadeWord()', 4000 );
+			return;
+		}
+
+	</script>
+
+	<style type="text/css">
+		* {
+		  -webkit-box-sizing: border-box;
+		     -moz-box-sizing: border-box;
+		          box-sizing: border-box;
+		}
+
+		body {
+			background-color: black;
+			/*transform: scale(1,-1);*/
+		}
+
+		.list {
+			margin: auto;
+			text-align: center;
+			display: none;
+		}
+
+		.word {
+			color: white;
+			font-size: 8.4mm;
+			margin: 4.2mm;
+		}
+	</style>
+	
 </head>
 
 <body>
 
 	<div class="list" id="l1">
-		<div class="word" name="w1">喜劇</div>
-		<div class="word" name="w2">鋼鐵人</div>
-		<div class="word" name="w3">恐怖片</div>
-		<div class="word" name="w4">奶茶</div>
-		<div class="word" name="w5">變形金剛</div>
-		<div class="word" name="w6">便利商店</div>
-		<div class="word" name="w7">越來越愛你</div>
+		<div class="word" name="w1">default W1</div>
+		<div class="word" name="w2">default W2</div>
+		<div class="word" name="w3">default W3</div>
+		<div class="word" name="w4">default W4</div>
+		<div class="word" name="w5">default W5</div>
+		<div class="word" name="w6">default W6</div>
+		<div class="word" name="w7">default W7</div>
 	</div>
 
 </body>
