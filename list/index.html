@@ -19,6 +19,7 @@
 		socket.on('ID_res', function(n){
 			userID = n;
 			console.log('my ID is ' + n );
+			$('title').text('#' + userID + ' SocialAR proprototype');
 		});
 
 		// press enter : the list fade IN 
