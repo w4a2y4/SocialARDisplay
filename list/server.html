@@ -6,18 +6,27 @@
   <body>
     <script>
 
+    // 1=49
+
   	var socket = io.connect();
 
   	$(document).keyup(function (e){
 
 		// press enter : the list fade IN 
 		// (only work when there's nothing on the screen)
-		if( e.which === 13 ) { 
-			socket.emit('start_s',e);
-		}
+
+    for (var i = 1; i < 10; i++) {
+      if( e.which === (i+48) ) { 
+        socket.emit('start_s',i);
+      }
+    }
+
+		// if( e.which === 13 ) { 
+		// 	socket.emit('start_s',e);
+		// }
 
 		// press space : a word fade OUT
-		else if( e.which === 32 ) {
+		if( e.which === 32 ) {
 			socket.emit('click_s',e);
 		}
 

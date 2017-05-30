@@ -25,14 +25,14 @@ io.on('connection', function(socket){
         console.log('user '+user+' disconnectedQQ');
     });
 
-    socket.on('start_s', function(e){
+    socket.on('start_s', function(dest){
         console.log('user '+user+' press start !');
-        io.emit('start_c', e);
+        io.emit('start_c', dest);
     });
 
-    socket.on('click_s', function(e){
+    socket.on('click_s', function(dest){
         console.log('user '+user+' click !');
-        io.emit('click_c', e);
+        io.emit('click_c', dest);
     });
 
 });
