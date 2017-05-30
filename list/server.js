@@ -25,14 +25,18 @@ io.on('connection', function(socket){
         console.log('user '+user+' disconnectedQQ');
     });
 
-    socket.on('start_s', function(dest){
+    socket.on('start_s', function(dest, list){
         console.log('user '+user+' press start !');
-        io.emit('start_c', dest);
+        io.emit('start_c', dest, list);
     });
 
     socket.on('click_s', function(dest){
         console.log('user '+user+' click !');
         io.emit('click_c', dest);
+    });
+
+    socket.on('init', function(){
+        console.log('initialize cnt');
     });
 
 });

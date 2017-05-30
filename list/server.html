@@ -6,31 +6,40 @@
   <body>
     <script>
 
-    // 1=49
+    var wordlist = [
+      ["喜劇", "鋼鐵人", "恐怖片", "奶茶", "變形金剛", "便利商店", "越來越愛你"],
+      ["紀錄片", "芒果冰", "全面啟動", "貓頭鷹", "科幻片", "驚悚", "奧斯卡"],
+      ["愛情片", "原子筆", "哈利波特", "戰爭片", "澎湖", "存錢筒", "玩具總動員"]
+    ];
+
+    var perm = [2, 1, 0];
+    var cnt = 0;
 
   	var socket = io.connect();
-
   	$(document).keyup(function (e){
 
-		// press enter : the list fade IN 
-		// (only work when there's nothing on the screen)
-
-    for (var i = 1; i < 10; i++) {
-      if( e.which === (i+48) ) { 
-        socket.emit('start_s',i);
+  		// press ID number : the list fade IN 
+  		// (only work when there's nothing on the screen)
+      for (var i = 1; i < 10; i++) {
+        if( e.which === (i+48) ) { 
+          var index = perm[cnt];
+          socket.emit('start_s', i, wordlist[index]);
+          cnt++;
+        }
       }
-    }
 
-		// if( e.which === 13 ) { 
-		// 	socket.emit('start_s',e);
-		// }
+  		// press space : a word fade OUT
+  		if( e.which === 32 ) {
+  			socket.emit('click_s',e);
+  		}
 
-		// press space : a word fade OUT
-		if( e.which === 32 ) {
-			socket.emit('click_s',e);
-		}
+      // press enter : init cnt
+      if( e.which === 13 ) {
+        socket.emit('init');
+        cnt = 0;
+      }
 
-	});
+  	});
 
     </script>
 

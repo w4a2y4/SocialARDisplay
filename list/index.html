@@ -24,11 +24,12 @@
 
 		// press enter : the list fade IN 
 		// (only work when there's nothing on the screen)
-		socket.on('start_c', function(dest) {
+		socket.on('start_c', function(dest, list) {
 			if( dest == userID ) {
 				// if( curr > 7 ) {
 			    	for (var i = 1; i <= 7; i++) {
 			    		var w = ".word[name=w" + i + "]"; 
+			    		$(w).text( list[i-1] );
 			    		$(w).fadeTo(1000, 1);
 			    	}
 			    	curr = 1;
