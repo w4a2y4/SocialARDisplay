@@ -38,6 +38,9 @@ io.on('connection', function(socket){
 
     socket.on('start_s', function(dest, list){
         console.log('user '+user+' press start !');
+        var t = new Date();
+        var time = t.getHours()+':'+t.getMinutes()+':'+(t.getSeconds()+1)+':'+t.getMilliseconds();
+        console.log( time+' list fade in @client' + dest);
         io.emit('start_c', dest, list);
     });
 
