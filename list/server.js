@@ -11,6 +11,17 @@ app.use(express.static(path.join(__dirname, 'view')));
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
+
+app.get('/1' , function(req, res){ res.sendFile(__dirname + '/client1.html'); });
+app.get('/2' , function(req, res){ res.sendFile(__dirname + '/client2.html'); });
+app.get('/3' , function(req, res){ res.sendFile(__dirname + '/client3.html'); });
+app.get('/4' , function(req, res){ res.sendFile(__dirname + '/client4.html'); });
+app.get('/5' , function(req, res){ res.sendFile(__dirname + '/client5.html'); });
+app.get('/6' , function(req, res){ res.sendFile(__dirname + '/client6.html'); });
+app.get('/7' , function(req, res){ res.sendFile(__dirname + '/client7.html'); });
+app.get('/8' , function(req, res){ res.sendFile(__dirname + '/client8.html'); });
+app.get('/9' , function(req, res){ res.sendFile(__dirname + '/client9.html'); });
+
 app.get('/server.html', function(req, res){
   res.sendFile(__dirname + '/server.html');
 });
