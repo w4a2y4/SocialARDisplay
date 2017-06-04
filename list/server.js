@@ -39,6 +39,12 @@ io.on('connection', function(socket){
         console.log('initialize cnt');
     });
 
+    socket.on('fade_word', function(i) {
+        var t = new Date();
+        var time = t.getHours()+':'+t.getMinutes()+':'+(t.getSeconds()+1)+':'+t.getMilliseconds();
+        console.log( time+' word #'+i+' fade out.');
+    });
+
 });
 
 http.listen(port, function(){

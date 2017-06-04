@@ -7,8 +7,7 @@
 	<!--link type="text/css" rel="stylesheet" href="index.css"-->
 	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
-	<!--script language="JavaScript" src="./fade.js"></script>
-	<script language="JavaScript" src="./client.js"></script-->
+	<!--script language="JavaScript" src="./fade.js"></script-->
 
 	<script type="text/javascript">
 		var socket = io.connect();
@@ -51,6 +50,7 @@
 			clearTimeout(timer);
 			if( curr > 7 ) return;
 			var w = ".word[name=w" + curr + "]"; 
+			socket.emit('fade_word', curr);
 			$(w).fadeTo(1000, 0);
 			curr += 1;
 			timer = setTimeout( 'fadeWord()', 4000 );
