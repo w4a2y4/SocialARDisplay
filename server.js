@@ -26,7 +26,7 @@ Date.prototype.Format = function (fmt) {
 }
 function finit() {
     var t = new Date().Format("yyyyMMdd-hhmm");
-    filename = '../log/' + t;
+    filename = 'log/' + t;
     fs.writeFile(filename, "created @ " + t + '\n', function(err){
         if (err) {
           console.error(err)
@@ -72,9 +72,9 @@ io.on('connection', function(socket){
         io.emit('start_c', dest, list);
     });
 
-    socket.on('click_s', function(dest){
+    socket.on('click_s', function(){
         console.log('user '+user+' click !');
-        io.emit('click_c', dest);
+        io.emit('click_c');
     });
 
     socket.on('init', function(){
