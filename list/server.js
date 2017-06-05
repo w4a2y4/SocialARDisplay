@@ -5,13 +5,46 @@ var app= express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var fs = require('fs');
+
+var filename;
+
+Date.prototype.Format = function (fmt) {  
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+function finit() {
+    var t = new Date().Format("yyyyMMdd-hhmm");
+    filename = '../log/' + t;
+    fs.writeFile(filename, "created @ " + t + '\n', function(err){
+        if (err) {
+          console.error(err)
+        }
+    });
+}
+finit();
+
+function fwrite(data) {
+    fs.appendFile( filename , data + '\n', function(err){
+        if (err) { console.error(err) }
+    });
+}
+
 var user_num=0;
 
 app.use(express.static(path.join(__dirname, 'view')));
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
-
+app.get('/', function(req, res){ res.sendFile(__dirname + '/index.html');});
 app.get('/1' , function(req, res){ res.sendFile(__dirname + '/client1.html'); });
 app.get('/2' , function(req, res){ res.sendFile(__dirname + '/client2.html'); });
 app.get('/3' , function(req, res){ res.sendFile(__dirname + '/client3.html'); });
@@ -21,10 +54,7 @@ app.get('/6' , function(req, res){ res.sendFile(__dirname + '/client6.html'); })
 app.get('/7' , function(req, res){ res.sendFile(__dirname + '/client7.html'); });
 app.get('/8' , function(req, res){ res.sendFile(__dirname + '/client8.html'); });
 app.get('/9' , function(req, res){ res.sendFile(__dirname + '/client9.html'); });
-
-app.get('/server.html', function(req, res){
-  res.sendFile(__dirname + '/server.html');
-});
+app.get('/server.html', function(req, res){ res.sendFile(__dirname + '/server.html');});
 
 io.on('connection', function(socket){
 
@@ -41,6 +71,7 @@ io.on('connection', function(socket){
         var t = new Date();
         var time = t.getHours()+':'+t.getMinutes()+':'+(t.getSeconds()+1)+':'+t.getMilliseconds();
         console.log( time+' list fade in @client' + dest);
+        fwrite( '\n' +time+' list fade in @client' + dest );
         io.emit('start_c', dest, list);
     });
 
@@ -57,6 +88,7 @@ io.on('connection', function(socket){
         var t = new Date();
         var time = t.getHours()+':'+t.getMinutes()+':'+(t.getSeconds()+1)+':'+t.getMilliseconds();
         console.log( time+' word #'+i+' fade out.');
+        fwrite( time+' word #'+i+' fade out.' );
     });
 
 });
@@ -64,3 +96,4 @@ io.on('connection', function(socket){
 http.listen(port, function(){
   console.log('listening on *:'+port);
 });
+
