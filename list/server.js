@@ -45,15 +45,15 @@ var user_num=0;
 
 app.use(express.static(path.join(__dirname, 'view')));
 app.get('/', function(req, res){ res.sendFile(__dirname + '/index.html');});
-app.get('/1' , function(req, res){ res.sendFile(__dirname + '/client1.html'); });
-app.get('/2' , function(req, res){ res.sendFile(__dirname + '/client2.html'); });
-app.get('/3' , function(req, res){ res.sendFile(__dirname + '/client3.html'); });
-app.get('/4' , function(req, res){ res.sendFile(__dirname + '/client4.html'); });
-app.get('/5' , function(req, res){ res.sendFile(__dirname + '/client5.html'); });
-app.get('/6' , function(req, res){ res.sendFile(__dirname + '/client6.html'); });
-app.get('/7' , function(req, res){ res.sendFile(__dirname + '/client7.html'); });
-app.get('/8' , function(req, res){ res.sendFile(__dirname + '/client8.html'); });
-app.get('/9' , function(req, res){ res.sendFile(__dirname + '/client9.html'); });
+app.get('/1' , function(req, res){ res.sendFile(__dirname + '/clients/client1.html'); });
+app.get('/2' , function(req, res){ res.sendFile(__dirname + '/clients/client2.html'); });
+app.get('/3' , function(req, res){ res.sendFile(__dirname + '/clients/client3.html'); });
+app.get('/4' , function(req, res){ res.sendFile(__dirname + '/clients/client4.html'); });
+app.get('/5' , function(req, res){ res.sendFile(__dirname + '/clients/client5.html'); });
+app.get('/6' , function(req, res){ res.sendFile(__dirname + '/clients/client6.html'); });
+app.get('/7' , function(req, res){ res.sendFile(__dirname + '/clients/client7.html'); });
+app.get('/8' , function(req, res){ res.sendFile(__dirname + '/clients/client8.html'); });
+app.get('/9' , function(req, res){ res.sendFile(__dirname + '/clients/client9.html'); });
 app.get('/server.html', function(req, res){ res.sendFile(__dirname + '/server.html');});
 
 io.on('connection', function(socket){
@@ -68,10 +68,9 @@ io.on('connection', function(socket){
 
     socket.on('start_s', function(dest, list){
         console.log('user '+user+' press start !');
-        var t = new Date();
-        var time = t.getHours()+':'+t.getMinutes()+':'+(t.getSeconds()+1)+':'+t.getMilliseconds();
-        console.log( time+' list fade in @client' + dest);
-        fwrite( '\n' +time+' list fade in @client' + dest );
+        var t = new Date().Format("hh:mm:ss:S");
+        console.log( t+' list fade in @client' + dest);
+        fwrite( '\n' +t+' list fade in @client' + dest );
         io.emit('start_c', dest, list);
     });
 
@@ -85,10 +84,9 @@ io.on('connection', function(socket){
     });
 
     socket.on('fade_word', function(i) {
-        var t = new Date();
-        var time = t.getHours()+':'+t.getMinutes()+':'+(t.getSeconds()+1)+':'+t.getMilliseconds();
-        console.log( time+' word #'+i+' fade out.');
-        fwrite( time+' word #'+i+' fade out.' );
+        var t = new Date().Format("hh:mm:ss:S");
+        console.log( t+' word #'+i+' fade out.');
+        fwrite( t+' word #'+i+' fade out.' );
     });
 
 });
