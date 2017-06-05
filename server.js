@@ -44,7 +44,6 @@ function fwrite(data) {
 var user_num=0;
 
 app.use(express.static(path.join(__dirname, 'view')));
-app.get('/', function(req, res){ res.sendFile(__dirname + '/index.html');});
 app.get('/1' , function(req, res){ res.sendFile(__dirname + '/clients/client1.html'); });
 app.get('/2' , function(req, res){ res.sendFile(__dirname + '/clients/client2.html'); });
 app.get('/3' , function(req, res){ res.sendFile(__dirname + '/clients/client3.html'); });
@@ -59,7 +58,6 @@ app.get('/server.html', function(req, res){ res.sendFile(__dirname + '/server.ht
 io.on('connection', function(socket){
 
     console.log('user '+ user_num + ' connected');
-    socket.emit('ID_res', user_num);
     var user = user_num++;
 
     socket.on('disconnect', function(){
