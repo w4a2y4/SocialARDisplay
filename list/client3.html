@@ -3,36 +3,26 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>SocialAR proprototype</title>
-	<!--link type="text/css" rel="stylesheet" href="index.css"-->
+	<title>#3 SocialAR client</title>
 	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
-	<!--script language="JavaScript" src="./fade.js"></script-->
 
 	<script type="text/javascript">
+		const userID = 3;
 		var socket = io.connect();
 		var curr = 1;
 		var timer;
-		var userID;
-
-		socket.on('ID_res', function(n){
-			userID = n;
-			console.log('my ID is ' + n );
-			$('title').text('#' + userID + ' SocialAR proprototype');
-		});
 
 		// press enter : the list fade IN 
 		// (only work when there's nothing on the screen)
 		socket.on('start_c', function(dest, list) {
 			if( dest == userID ) {
-				// if( curr > 7 ) {
-			    	for (var i = 1; i <= 7; i++) {
-			    		var w = ".word[name=w" + i + "]"; 
-			    		$(w).text( list[i-1] );
-			    		$(w).fadeTo(1000, 1);
-			    	}
-			    	curr = 1;
-			    // }
+		    	for (var i = 1; i <= 7; i++) {
+		    		var w = ".word[name=w" + i + "]"; 
+		    		$(w).text( list[i-1] );
+		    		$(w).fadeTo(1000, 1);
+		    	}
+		    	curr = 1;
 				$('#l1').fadeIn(1000);
 
 				timer = setTimeout( 'fadeWord()', 4000 );
