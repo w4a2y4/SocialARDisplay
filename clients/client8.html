@@ -3,6 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+
 	<title>#8 SocialAR client</title>
 	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
@@ -58,10 +62,11 @@
 
 		body {
 			background-color: black;
-			/*transform: scale(1,-1);*/
+			transform: scale(1,-1);
 		}
 
 		.list {
+			padding-bottom: 20px;
 			margin: auto;
 			text-align: center;
 			display: none;
