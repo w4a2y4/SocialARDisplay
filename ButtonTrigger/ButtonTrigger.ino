@@ -1,3 +1,5 @@
+#include <Keyboard.h>
+
 const int yesButtonPin = 4;
 const int noButtonPin = 5;
 const int distractButtonPin = 0;
@@ -37,17 +39,17 @@ void loop() {
   if ( count > 2500 ) {
     if ( distractPressedFlag ) {
        Serial.println("distract press");
-       //Keyboard.print(' ');
+       Keyboard.print(' ');
        distractPressedFlag = false;
     }
     if ( yesPressedFlag ) {
        Serial.println("yes press");
-       //Keyboard.print('y');
+       Keyboard.print('y');
        yesPressedFlag = false;
     }
     if ( noPressedFlag ) {
        Serial.println("no press");
-       //Keyboard.print('n');
+       Keyboard.print('n');
        noPressedFlag = false;
     }
     Keyboard.releaseAll();
