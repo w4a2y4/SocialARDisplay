@@ -4,10 +4,14 @@ const int yesButtonPin = 4;
 const int noButtonPin = 5;
 const int distractButtonPin = 0;
 const int buttonPressedThreshold = 512;
-boolean distractPressedFlag = false;
-boolean yesPressedFlag = false;
-boolean noPressedFlag = false;
-int count = 0;
+
+boolean distractStatus = false;
+boolean yesStatus = false;
+boolean noStatus = false;
+
+boolean distractPreStatus = false;
+boolean yesPreStatus = false;
+boolean noPreStatus = false;
 
 void setup() {
   // put your setup code here, to run once:
@@ -20,44 +24,27 @@ void setup() {
 
 void loop() {
   
-  count++;
+  distractPreStatus = distractStatus;
+  yesPreStatus = yesStatus;
+  noPreStatus = noStatus;
   
-  int distractValue = analogRead(distractButtonPin);
-  int yesValue = analogRead(yesButtonPin);
-  int noValue = analogRead(noButtonPin);
+  distractStatus = analogRead(distractButtonPin) > buttonPressedThreshold;
+  yesStatus = analogRead(yesButtonPin) > buttonPressedThreshold;
+  noStatus = analogRead(noButtonPin) > buttonPressedThreshold;
   
-  if ( distractValue > buttonPressedThreshold ) {
-    //Serial.println("d " + distractValue);
-     distractPressedFlag = true;
-  }     
-  if ( yesValue > buttonPressedThreshold ) {
-    //Serial.println("y " + yesValue);
-    yesPressedFlag = true;
+  if ( distractPreStatus && !distractStatus ) {
+    Serial.println("distract press");
+    Keyboard.print(' ');
   }
-  if ( noValue > buttonPressedThreshold ) {
-    //Serial.println("n " + noValue);
-    noPressedFlag = true;
+  if ( yesPreStatus && !yesStatus ) {
+    Serial.println("yes press");
+    Keyboard.print('y');
   }
-  
-  if ( count > 4000 ) {
-    if ( distractPressedFlag ) {
-       Serial.println("distract press");
-       Keyboard.print(' ');
-       distractPressedFlag = false;
-    }
-    if ( yesPressedFlag ) {
-       Serial.println("yes press");
-       Keyboard.print('y');
-       yesPressedFlag = false;
-    }
-    if ( noPressedFlag ) {
-       Serial.println("no press");
-       Keyboard.print('n');
-       noPressedFlag = false;
-    }
-    Keyboard.releaseAll();
-    count = 0;
+  if ( noPreStatus && !noStatus ) {
+    Serial.println("no press");
+    Keyboard.print('n');
   }
+
 }
 
 
