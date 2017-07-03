@@ -32,15 +32,15 @@ void loop() {
   yesStatus = analogRead(yesButtonPin) > buttonPressedThreshold;
   noStatus = analogRead(noButtonPin) > buttonPressedThreshold;
   
-  if ( distractPreStatus && !distractStatus ) {
+  if ( !distractPreStatus && distractStatus ) {
     Serial.println("distract press");
     Keyboard.print(' ');
   }
-  if ( yesPreStatus && !yesStatus ) {
+  if ( !yesPreStatus && yesStatus ) {
     Serial.println("yes press");
     Keyboard.print('y');
   }
-  if ( noPreStatus && !noStatus ) {
+  if ( !noPreStatus && noStatus ) {
     Serial.println("no press");
     Keyboard.print('n');
   }
