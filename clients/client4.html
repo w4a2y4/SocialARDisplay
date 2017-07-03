@@ -44,7 +44,7 @@
 
 		function fadeWord() {
 			clearTimeout(timer);
-			if( curr > 7 || fading ) return;
+			if( curr > 7  ) return;
 			socket.emit('fade_word', curr);
 			var w = ".word[name=w" + curr + "]"; 
 			$(w).fadeTo(1000, 0);

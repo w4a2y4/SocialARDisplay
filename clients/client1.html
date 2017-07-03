@@ -24,6 +24,7 @@
 		// (only work when there's nothing on the screen)
 		socket.on('start_c', function(dest, list) {
 			if( dest == userID ) {
+				console.log(list);
 				me = true;
 		    	for (var i = 1; i <= 7; i++) {
 		    		var w = ".word[name=w" + i + "]"; 
@@ -44,7 +45,7 @@
 
 		function fadeWord() {
 			clearTimeout(timer);
-			if( curr > 7 || fading ) return;
+			if( curr > 7 ) return;
 			socket.emit('fade_word', curr);
 			var w = ".word[name=w" + curr + "]"; 
 			$(w).fadeTo(1000, 0);
