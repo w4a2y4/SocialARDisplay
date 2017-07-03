@@ -16,7 +16,9 @@
 		var socket = io.connect();
 		var curr = 1;
 		var timer;
+
 		var me = false;
+		var fading = false;
 
 		// press enter : the list fade IN 
 		// (only work when there's nothing on the screen)
@@ -42,10 +44,12 @@
 
 		function fadeWord() {
 			clearTimeout(timer);
-			if( curr > 7 ) return;
+			if( curr > 7  ) return;
 			socket.emit('fade_word', curr);
 			var w = ".word[name=w" + curr + "]"; 
 			$(w).fadeTo(1000, 0);
+			fading = true;
+			setTimeout( function(){ fading = false; }, 1000 );
 			curr += 1;
 			timer = setTimeout( 'fadeWord()', 4000 );
 			return;

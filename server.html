@@ -2,17 +2,17 @@
   <head>
   	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="wordlist.js"></script>
   </head>
   <body>
     <script>
 
-    var wordlist = [
-      ["喜劇", "鋼鐵人", "恐怖片", "奶茶", "變形金剛", "便利商店", "越來越愛你"],
-      ["紀錄片", "芒果冰", "全面啟動", "貓頭鷹", "科幻片", "驚悚", "奧斯卡"],
-      ["愛情片", "原子筆", "哈利波特", "戰爭片", "澎湖", "存錢筒", "玩具總動員"]
-    ];
+    const currentTopicID = 0;
+    var wordlist = ws[currentTopicID].words;
 
-    var perm = [2, 1, 0];
+    var perm = [0, 1, 2];
+    shuffle(perm);
+
     var cnt = 0;
 
   	var socket = io.connect();
@@ -23,6 +23,7 @@
       for (var i = 1; i < 10; i++) {
         if( e.which === (i+48) ) { 
           var index = perm[cnt];
+          console.log( cnt + ", " + index + " " + wordlist[index]);
           socket.emit('start_s', i, wordlist[index]);
           cnt++;
         }
@@ -42,6 +43,18 @@
       }
 
   	});
+
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
 
     </script>
 
