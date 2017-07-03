@@ -27,16 +27,19 @@ void loop() {
   int noValue = analogRead(noButtonPin);
   
   if ( distractValue > buttonPressedThreshold ) {
+    //Serial.println("d " + distractValue);
      distractPressedFlag = true;
   }     
   if ( yesValue > buttonPressedThreshold ) {
+    //Serial.println("y " + yesValue);
     yesPressedFlag = true;
   }
   if ( noValue > buttonPressedThreshold ) {
+    //Serial.println("n " + noValue);
     noPressedFlag = true;
   }
   
-  if ( count > 2500 ) {
+  if ( count > 4000 ) {
     if ( distractPressedFlag ) {
        Serial.println("distract press");
        Keyboard.print(' ');
