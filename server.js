@@ -43,7 +43,7 @@ function fwrite(data) {
 
 var user_num=0;
 
-app.use(express.static(path.join(__dirname, 'view')));
+app.use(express.static(path.join(__dirname, '')));
 app.get('/1' , function(req, res){ res.sendFile(__dirname + '/clients/client1.html'); });
 app.get('/2' , function(req, res){ res.sendFile(__dirname + '/clients/client2.html'); });
 app.get('/3' , function(req, res){ res.sendFile(__dirname + '/clients/client3.html'); });
