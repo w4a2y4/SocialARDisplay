@@ -33,7 +33,9 @@
 		    	}
 		    	curr = 1;
 				$('#l1').fadeIn(1000);
-				timer = setTimeout( 'fadeWord()', 4000 );
+				setTimeout( function(){
+					timer = setTimeout( 'fadeWord()', 4000 );
+				}, 1000);
 			}
 			else me = false;
 		});
