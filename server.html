@@ -7,24 +7,28 @@
   <body>
     <script>
 
-    var perm = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
-    shuffle(perm);
-
     var cnt = 0;
-
   	var socket = io.connect();
+
+    function showList(i) {
+      console.log( cnt + " " + wordlist[cnt]);
+      socket.emit('start_s', i, wordlist[cnt]);
+      cnt++;
+    };
+
+    function clientStart(i) {
+      console.log(i + ' pressed.');
+      setTimeout(function(){showList(i);}, 5000);
+      setTimeout(function(){showList(i);}, 45000);
+      setTimeout(function(){showList(i);}, 85000);
+    };
+
   	$(document).keyup(function (e){
 
   		// press ID number : the list fade IN 
   		// (only work when there's nothing on the screen)
-      for (var i = 1; i < 10; i++) {
-        if( e.which === (i+48) ) { 
-          var index = perm[cnt];
-          console.log( cnt + ", " + index + " " + wordlist[index]);
-          socket.emit('start_s', i, wordlist[index]);
-          cnt++;
-        }
-      }
+      for (var i = 1; i < 10; i++)
+        if( e.which === (i+48) ) clientStart(i);
 
   		// Space = 32
   		if( e.which === 32 ) { socket.emit('distract'); }
@@ -32,7 +36,6 @@
       if( e.which === 78 ) { socket.emit('click_s', 'no'); }
       if( e.which === 89 ) { socket.emit('click_s', 'yes'); }
       
-
       // press enter : init cnt
       if( e.which === 13 ) {
         socket.emit('init');
@@ -41,24 +44,12 @@
 
   	});
 
-    function shuffle(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-      while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-      return array;
-    }
-
     </script>
 
     <div>
-    This is our server.html file
-    press ID number : the list fade IN
-    press space : a word fade OUT
+    This is our server.html file <br>
+    press ID number : the list fade IN <br>
+    press space : a word fade OUT <br>
     press enter : init cnt
     </div>
   </body>
